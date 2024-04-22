@@ -1,0 +1,36 @@
+{% extends "news/default.html" %}
+{% load custom_filters %}
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block content %}
+<hr>
+    <h3>Total number of news: {{ news|length }}</h3>
+
+   {% if news %}
+   <table>
+    <tr>
+        <td>Title</td>
+        <td>Date</td>
+        <td>Content</td>
+    </tr>
+   
+    {% for item in news %}
+    <tr>
+        <td>{{ item.title|censor }}</td>
+        <td>{{ item.created_at|date:'d m y' }}</td>
+        <td>{{ item.text|censor|truncatewords:20 }}</td>
+    
+    </tr>
+    {% endfor %}
+
+</table>
+    {% else %}
+       <h2>Товаров нет!</h2>
+   {% endif %}
+
+    <h1>News list</h1>
+    {{ news }}
+{% endblock content %}
