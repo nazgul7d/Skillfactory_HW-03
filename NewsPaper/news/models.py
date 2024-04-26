@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Author(models.Model):
@@ -29,6 +30,12 @@ class Post(models.Model):
     text = models.TextField()
     rating = models.IntegerField(default=0)
 
+    author_name = models.CharField(max_length=100, blank=True, editable=False)
+
+    def save(self, *args, **kwargs):
+        self.author_name = self.author.username
+        super().save(*args, **kwargs)
+
     def like(self):
         self.rating += 1
         self.save()
@@ -40,6 +47,8 @@ class Post(models.Model):
     def preview(self):
         return(self.text[:124] + + '...')
 
+    def get_absolute_url(self):
+        return reverse('product_detail', args=[str(self.id)])
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete = models.CASCADE)
