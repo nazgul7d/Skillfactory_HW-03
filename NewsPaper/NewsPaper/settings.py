@@ -60,6 +60,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 ]
 
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -154,3 +156,28 @@ SITE_ID=1
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_FORMS = {'signup': 'sign.models.CommonSignupForm'}
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'nazgul7d@gmail.com'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+ 
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+ 
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds

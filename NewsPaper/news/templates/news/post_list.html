@@ -63,4 +63,23 @@ News
 
     <h1>News list</h1>
     {{ news }}
+
+{% for category in categories %}
+    <h2>{{ category.category }}</h2>
+    <!-- Other category details and news items -->
+    {% if user.is_authenticated %}
+        {% if user in category.subscribers.all %}
+            <form action="{% url 'unsubscribe_from_category' category.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Отписаться</button>
+            </form>
+        {% else %}
+            <form action="{% url 'subscribe_to_category' category.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Подписаться</button>
+            </form>
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
 {% endblock content %}
