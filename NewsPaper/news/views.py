@@ -55,7 +55,7 @@ class PostCreate(PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.post_type = "новость" 
         result = super().form_valid(form)
-        self.send_email_to_subscribers(form.instance)
+        self.send_email_to_subscribers(form.instance.pk)
         return result
     
     def send_email_to_subscribers(self, post):

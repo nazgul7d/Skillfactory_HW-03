@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Newsletter</title>
+</head>
+<body>
+    <h1>Weekly Newsletter: Latest News</h1>
+    <p>Here are the latest news articles from the past week:</p>
+    
+    {% for post in latest_posts %}
+    <div>
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.text }}</p>
+        <p><a href="{{ post.get_absolute_url }}">Read more...</a></p>
+    </div>
+    {% endfor %}
+</body>
+</html>
