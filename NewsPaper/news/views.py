@@ -19,6 +19,9 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
+from django.core.cache import cache
+
+
 class NewsList(PermissionRequiredMixin, ListView):
     permission_required = ('news.view_post', )
     model = Post
@@ -45,6 +48,14 @@ class NewsDetail(PermissionRequiredMixin, DetailView):
     model = Post
     template_name = 'news/post.html'
     context_object_name = 'post'
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'post-{self.kwargs["pk"]}', None)
+
+        if not obj:
+            obj = super().get_object(queryset = self.queryset)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+        return obj
 
 class PostCreate(PermissionRequiredMixin, CreateView):
     permission_required = ('news.add_post', )
